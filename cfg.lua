@@ -2,9 +2,10 @@ cfg = {
   qb = GetResourceState('qb-core') == 'started',
   delay = {
     active = true,
-    time = 5000
+    time = 60000,
+    all = false, -- If true, it will send all messages at once.
+    random = true, -- If true, it will pick a random message from the list to send instead of sending them in order (delay.all must be false).
   },
-  interval = 60000, -- Send all the messages every 60 seconds
   messages = {
     {'Title', 'Message', 'success', 5000, true }, -- Title, Message, Type, DurationOfMessage(ms), active
     {'Title 2', 'Cool message', 'error', 5000, true }

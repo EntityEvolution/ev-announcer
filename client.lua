@@ -41,16 +41,31 @@ if commands.active then
 end
 
 -- Send all the messages
+local currIdx = 1
 CreateThread(function()
   while true do
-    Wait(cfg.interval)
-    for i = 1, #cfg.messages do
-      if cfg.messages[i][6] then
-        -- Delay between messages if enabled
-        if cfg.delay.active then
-          Wait(cfg.delay.time)
+    Wait(cfg.delay.time)
+    if cfg.delay.all then
+      -- Send all messages at once
+      for i = 1, #cfg.messages do
+        if cfg.messages[i][6] then
+          Notify(cfg.messages[i][1], cfg.messages[i][2], cfg.messages[i][3], cfg.messages[i][4])
         end
-        Notify(cfg.messages[i][1], cfg.messages[i][2], cfg.messages[i][3], cfg.messages[i][4])
+      end
+    elseif cfg.delay.random then
+      -- Send a random message from the list
+      local idx = math.random(1, #cfg.messages)
+      if cfg.messages[idx][6] then
+        Notify(cfg.messages[idx][1], cfg.messages[idx][2], cfg.messages[idx][3], cfg.messages[idx][4])
+      end
+    else
+      -- Send messages in order
+      if cfg.messages[currIdx][6] then
+        Notify(cfg.messages[currIdx][1], cfg.messages[currIdx][2], cfg.messages[currIdx][3], cfg.messages[currIdx][4])
+      end
+      currIdx += 1
+      if currIdx > #cfg.messages then
+        currIdx = 1
       end
     end
   end
