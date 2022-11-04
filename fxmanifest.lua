@@ -4,7 +4,6 @@ lua54 'yes'
 use_fxv2_oal 'yes'
 author 'BombayV'
 
-client_scripts {
-  'cfg.lua',
-  'client.lua'
-}
+shared_script 'cfg'
+client_script 'client.lua'
+server_script 'server.lua'
